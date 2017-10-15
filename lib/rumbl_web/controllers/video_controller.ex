@@ -10,7 +10,10 @@ defmodule RumblWeb.VideoController do
   end
 
   def new(conn, _params) do
-    changeset = Contents.change_video(%Video{})
+    changeset = conn.assigns.current_user
+    |> Ecto.build_assoc(:videos)
+    |> Contents.change_video()
+
     render(conn, "new.html", changeset: changeset)
   end
 
