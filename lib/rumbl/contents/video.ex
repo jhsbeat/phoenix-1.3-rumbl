@@ -9,12 +9,13 @@ defmodule Rumbl.Contents.Video do
     field :title, :string
     field :url, :string
     belongs_to :user, Rumbl.Accounts.User
+    belongs_to :category, Rumbl.Contents.Category
 
     timestamps()
   end
 
   @required [:user_id, :url, :title, :description]
-  @optional []
+  @optional [:category_id]
 
   @doc false
   def changeset(%Video{} = video, attrs) do
