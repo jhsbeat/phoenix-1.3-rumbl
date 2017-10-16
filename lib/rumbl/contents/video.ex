@@ -13,7 +13,7 @@ defmodule Rumbl.Contents.Video do
     timestamps()
   end
 
-  @required [:url, :title, :description]
+  @required [:user_id, :url, :title, :description]
   @optional []
 
   @doc false
