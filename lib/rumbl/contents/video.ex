@@ -22,5 +22,6 @@ defmodule Rumbl.Contents.Video do
     video
     |> cast(attrs, @required ++ @optional)
     |> validate_required(@required)
+    |> assoc_constraint(:category)
   end
 end
