@@ -6,6 +6,7 @@ defmodule Rumbl.Contents.Category do
 
   schema "categories" do
     field :name, :string
+    has_many :videos, Rumbl.Contents.Video
 
     timestamps()
   end
