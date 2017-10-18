@@ -1,20 +1,19 @@
-# Rumbl
+## Programming Phoenix Sources
 
-To start your Phoenix server:
+[Original source codes](https://pragprog.com/titles/phoenix/source_code) for [Programming Phoenix](https://www.amazon.com/Programming-Phoenix-Productive-Reliable-Fast/dp/1680501453) was written for Elixir 1.1.0 and Phoenix 1.1.1.
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  * Install Node.js dependencies with `cd assets && npm install`
-  * Start Phoenix endpoint with `mix phx.server`
+This repo is updated version of that for Elixir 1.5.2 and Phoenix 1.3.0, and
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+* includes Rumbl and Rumbrella
+* has commits for almost every pages.
+* includes Wolfram Alpha secret for your convenience.
 
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
+#### Usage
 
-## Learn more
+```shell
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+$ mix deps.get
+$ (cd apps/rumbl; npm install; cd ../..)
+$ mix phoenix.server
+
+```
