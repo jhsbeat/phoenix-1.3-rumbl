@@ -16,12 +16,17 @@ defmodule RumblWeb.VideoControllerTest do
     end)
   end
 
-  setup do
-    user = insert_user(%{username: "max"})
-    conn = assign(build_conn(), :current_user, user)
-    {:ok, conn: conn, user: user}
+  setup %{conn: conn} = config do
+    if username = config[:login_as] do
+      user = insert_user(%{username: username})
+      conn = assign(conn, :current_user, user)
+      {:ok, conn: conn, user: user}
+    else
+      :ok
+    end
   end
 
+  @tag login_as: "max"
   test "lists all user's videos on index", %{conn: conn, user: user} do
     user_video = insert_video(user, title: "funny cats")
     other_video = insert_video(insert_user(%{username: "other"}), title: "another video")
