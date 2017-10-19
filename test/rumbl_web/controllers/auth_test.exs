@@ -33,4 +33,17 @@ defmodule RumblWeb.AuthTest do
     |> Auth.logout()
     assert conn.private.plug_session_info == :drop
   end
+
+  test "call places user from session into assigns", %{conn: conn} do
+    user = insert_user()
+    conn = conn
+    |> put_session(:user_id, user.id)
+    |> Auth.call(Repo)
+    assert conn.assigns.current_user.id == user.id
+  end
+
+  test "call with no session sets current_user assign to nil", %{conn: conn} do
+    conn = Auth.call(conn, Repo)
+    refute conn.assigns.current_user
+  end
 end
