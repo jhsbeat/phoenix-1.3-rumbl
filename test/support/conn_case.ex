@@ -33,7 +33,7 @@ defmodule RumblWeb.ConnCase do
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(Rumbl.Repo, {:shared, self()})
     end
-    {:ok, conn: Phoenix.ConnTest.build_conn()}
+    {:ok, conn: Phoenix.ConnTest.build_conn(), login_as: Map.get(tags, :login_as, "max")}
   end
 
 end

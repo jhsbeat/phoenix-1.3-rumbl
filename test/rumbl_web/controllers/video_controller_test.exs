@@ -1,6 +1,7 @@
 defmodule RumblWeb.VideoControllerTest do
   use RumblWeb.ConnCase
 
+  @tag login_as: nil
   test "requires user authentication on all actions", %{conn: conn} do
     Enum.each([
       get(conn, video_path(conn, :new)),
@@ -26,7 +27,6 @@ defmodule RumblWeb.VideoControllerTest do
     end
   end
 
-  @tag login_as: "max"
   test "lists all user's videos on index", %{conn: conn, user: user} do
     user_video = insert_video(user, title: "funny cats")
     other_video = insert_video(insert_user(%{username: "other"}), title: "another video")
