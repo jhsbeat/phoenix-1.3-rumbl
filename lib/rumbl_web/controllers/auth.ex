@@ -26,7 +26,8 @@ defmodule RumblWeb.Auth do
   end
 
   def logout(conn) do
-    configure_session(conn, drop: true)
+    conn
+    |> configure_session(drop: true)
   end
 
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
