@@ -16,6 +16,7 @@ defmodule Rumbl.Accounts.User do
   def changeset(model, params \\ %{}) do
     model
     |> cast(params, [:name, :username])
+    |> validate_required(:username) # migration 에서 null: false 했으니, required 가 맞음. 테스트와도 정합됨.
     |> validate_length(:username, min: 1, max: 20)
     |> unique_constraint(:username)
   end
