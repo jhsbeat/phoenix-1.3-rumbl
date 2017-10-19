@@ -1,6 +1,8 @@
 defmodule RumblWeb.VideoControllerTest do
   use RumblWeb.ConnCase
 
+  alias Rumbl.Contents.Video
+
   @tag login_as: nil
   test "requires user authentication on all actions", %{conn: conn} do
     Enum.each([
@@ -35,5 +37,23 @@ defmodule RumblWeb.VideoControllerTest do
     assert html_response(conn, 200) =~ ~r/Listing Videos/
     assert String.contains?(conn.resp_body, user_video.title)
     refute String.contains?(conn.resp_body, other_video.title)
+  end
+
+  @valid_attrs %{url: "http://youtu.be", title: "vid", description: "a vid"}
+  @invalid_attrs %{title: "invalid"}
+
+  defp count(query), do: Repo.one(from v in query, select: count(v.id))
+
+  test "creates user video and redirects", %{conn: conn, user: user} do
+    conn = post conn, video_path(conn, :create), video: @valid_attrs
+    assert redirected_to(conn) == video_path(conn, :index)
+    assert Repo.get_by!(Video, @valid_attrs).user_id == user.id
+  end
+
+  test "does not create video and renders errors when invalid", %{conn: conn} do
+    count_before = count(Video)
+    conn = post conn, video_path(conn, :create), video: @invalid_attrs
+    assert html_response(conn, 200) =~ "check the errors"
+    assert count(Video) == count_before
   end
 end
