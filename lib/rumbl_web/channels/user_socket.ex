@@ -3,6 +3,7 @@ defmodule RumblWeb.UserSocket do
 
   ## Channels
   # channel "room:*", RumblWeb.RoomChannel
+  channel "videos:*", RumblWeb.VideoChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
