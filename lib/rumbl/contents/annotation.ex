@@ -13,10 +13,13 @@ defmodule Rumbl.Contents.Annotation do
     timestamps()
   end
 
+  @required [:at, :body, :video_id, :user_id]
+  @optional []
+
   @doc false
   def changeset(%Annotation{} = annotation, attrs) do
     annotation
-    |> cast(attrs, [:body, :at])
-    |> validate_required([:body, :at])
+    |> cast(attrs, @required ++ @optional)
+    |> validate_required(@required)
   end
 end
