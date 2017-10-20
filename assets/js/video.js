@@ -40,7 +40,7 @@ let Video = {
         let template = document.createElement("div");
         template.innerHTML = `
           <a href="#" data-seek="${this.esc(at)}">
-            <b>${this.esc(user.username)}</b>: #{this.esc(body)}
+            <b>${this.esc(user.username)}</b>: ${this.esc(body)}
           </a>
         `;
         msgContainer.appendChild(template);
