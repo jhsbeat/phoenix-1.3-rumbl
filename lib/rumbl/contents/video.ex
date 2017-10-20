@@ -3,7 +3,7 @@ defmodule Rumbl.Contents.Video do
   import Ecto.Changeset
   alias Rumbl.Contents.Video
 
-
+  @primary_key {:id, Rumbl.Permalink, autogenerate: true}
   schema "videos" do
     field :description, :string
     field :title, :string
