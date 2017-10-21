@@ -5,13 +5,14 @@ defmodule RumblWeb.VideoChannel do
   import Ecto.Query
   import Ecto
 
-  def join("videos:" <> video_id, _params, socket) do
+  def join("videos:" <> video_id, params, socket) do
+    last_seen_id = params["last_seen_id"] || 0
     video_id = String.to_integer(video_id)
     video = Repo.get!(Rumbl.Contents.Video, video_id)
-    annotations = Repo.all(from a in assoc(video, :annotations), order_by: [asc: a.at, asc: a.id], limit: 200, preload: [:user])
+    annotations = Repo.all(from a in assoc(video, :annotations), where: a.id > ^last_seen_id, order_by: [asc: a.at, asc: a.id], limit: 200, preload: [:user])
     resp = %{annotations: Phoenix.View.render_many(annotations, AnnotationView, "annotation.json")}
 
-    {:ok, resp, assign(socket |> IO.inspect, :video_id, video_id)}
+    {:ok, resp, assign(socket, :video_id, video_id)}
   end
 
   def handle_in(event, params, socket) do
