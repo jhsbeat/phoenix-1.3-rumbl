@@ -43,6 +43,7 @@ defmodule Rumbl.Mixfile do
       {:cowboy, "~> 1.0"},
       {:comeonin, ">= 0.0.0"},
       {:bcrypt_elixir, ">= 0.0.0"},
+      {:sweet_xml, ">= 0.0.0"},
     ]
   end
 
