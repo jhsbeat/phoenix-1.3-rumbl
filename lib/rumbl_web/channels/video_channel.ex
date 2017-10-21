@@ -1,9 +1,17 @@
 defmodule RumblWeb.VideoChannel do
   use RumblWeb, :channel
   alias Rumbl.Repo
+  alias RumblWeb.AnnotationView
+  import Ecto.Query
+  import Ecto
 
   def join("videos:" <> video_id, _params, socket) do
-    {:ok, assign(socket |> IO.inspect, :video_id, String.to_integer(video_id))}
+    video_id = String.to_integer(video_id)
+    video = Repo.get!(Rumbl.Contents.Video, video_id)
+    annotations = Repo.all(from a in assoc(video, :annotations), order_by: [asc: a.at, asc: a.id], limit: 200, preload: [:user])
+    resp = %{annotations: Phoenix.View.render_many(annotations, AnnotationView, "annotation.json")}
+
+    {:ok, resp, assign(socket |> IO.inspect, :video_id, video_id)}
   end
 
   def handle_in(event, params, socket) do
