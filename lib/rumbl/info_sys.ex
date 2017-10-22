@@ -1,5 +1,5 @@
 defmodule Rumbl.InfoSys do
-  @backends [Rumbl.InfoSys.Wolfram, Rumbl.InfoSys.Crash]
+  @backends [Rumbl.InfoSys.Wolfram, Rumbl.InfoSys.Crash, Rumbl.InfoSys.TakeForever]
 
   defmodule Result do
     defstruct score: 0, text: nil, url: nil, backend: nil
