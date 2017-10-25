@@ -5,7 +5,11 @@ defmodule Rumbl.Mixfile do
     [
       app: :rumbl,
       version: "0.0.1",
-      elixir: "~> 1.4",
+      build_path: "../../_build",
+      config_path: "../../config/config.exs",
+      deps_path: "../../deps",
+      lockfile: "../../mix.lock",
+      elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env),
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
       start_permanent: Mix.env == :prod,
@@ -43,7 +47,7 @@ defmodule Rumbl.Mixfile do
       {:cowboy, "~> 1.0"},
       {:comeonin, ">= 0.0.0"},
       {:bcrypt_elixir, ">= 0.0.0"},
-      {:sweet_xml, ">= 0.0.0"},
+      {:info_sys, in_umbrella: true},
     ]
   end
 

@@ -56,5 +56,3 @@ config :rumbl, Rumbl.Repo,
   database: "rumbl_dev",
   hostname: "localhost",
   pool_size: 10
-
-config :rumbl, :wolfram, app_id: "7QWU8G-TWL4RGQE4X"
