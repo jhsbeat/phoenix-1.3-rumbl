@@ -1,5 +1,5 @@
-defmodule Rumbl.InfoSys do
-  @backends [Rumbl.InfoSys.Wolfram, Rumbl.InfoSys.Crash, Rumbl.InfoSys.TakeForever]
+defmodule InfoSys do
+  @backends [InfoSys.Wolfram, InfoSys.Crash, InfoSys.TakeForever]
 
   defmodule Result do
     defstruct score: 0, text: nil, url: nil, backend: nil
@@ -25,7 +25,7 @@ defmodule Rumbl.InfoSys do
     opts = [backend, query, query_ref, self(), limit]
     # Supervisor 밑에서 시작하기 때문에 crash 하더라도 현재 프로세스에 영향을 주지 않음.
     # restart: :temporary 기 때문에, die 하더라도 재시작하지 않음.
-    {:ok, pid} = Supervisor.start_child(Rumbl.InfoSys.Supervisor, opts)
+    {:ok, pid} = Supervisor.start_child(InfoSys.Supervisor, opts)
     monitor_ref = Process.monitor(pid)
     {pid, monitor_ref, query_ref}
   end
