@@ -1,5 +1,7 @@
 defmodule InfoSys do
-  @backends [InfoSys.Wolfram, InfoSys.Crash, InfoSys.TakeForever]
+  @backends [InfoSys.Wolfram, InfoSys.Crash]
+  # @backends [InfoSys.Wolfram, InfoSys.Crash, InfoSys.TakeForever]
+  # TakeForever 는 항상 timeout 까지 기다리게 만들기 때문에 개발에 불편함. Timeout 처리가 제대로 되는지 확인하고 싶을 때만 enable.
 
   defmodule Result do
     defstruct score: 0, text: nil, url: nil, backend: nil
@@ -13,11 +15,15 @@ defmodule InfoSys do
     limit = opts[:limit] || 10
     backends = opts[:backends] || @backends
 
-    backends
+    before = Time.utc_now()
+    result = backends
     |> Enum.map(&spawn_query(&1, query, limit))
     |> await_results(opts)
     |> Enum.sort(&(&1.score >= &2.score))
     |> Enum.take(limit)
+    time = Time.diff(Time.utc_now(), before, :millisecond)
+    IO.puts "Took #{time} milliseconds."
+    result
   end
 
   defp spawn_query(backend, query, limit) do
@@ -31,7 +37,7 @@ defmodule InfoSys do
   end
 
   defp await_results(children, opts) do
-    timeout = opts[:timeout] || 5_000
+    timeout = opts[:timeout] || 10_000
     timer = Process.send_after(self(), :timedout, timeout)
     results = await_result(children, [], :infinity)
     cleanup(timer)
