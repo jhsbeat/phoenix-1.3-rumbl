@@ -19,6 +19,7 @@ defmodule RumblWeb.ChannelCase do
     quote do
       # Import conveniences for testing with channels
       use Phoenix.ChannelTest
+      alias Rumbl.Repo
 
       # The default endpoint for testing
       @endpoint RumblWeb.Endpoint
