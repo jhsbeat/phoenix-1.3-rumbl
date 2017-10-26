@@ -1,4 +1,5 @@
 defmodule InfoSys do
+  require Logger
   @backends [InfoSys.Wolfram, InfoSys.Crash]
   # @backends [InfoSys.Wolfram, InfoSys.Crash, InfoSys.TakeForever]
   # TakeForever 는 항상 timeout 까지 기다리게 만들기 때문에 개발에 불편함. Timeout 처리가 제대로 되는지 확인하고 싶을 때만 enable.
@@ -22,7 +23,7 @@ defmodule InfoSys do
     |> Enum.sort(&(&1.score >= &2.score))
     |> Enum.take(limit)
     time = Time.diff(Time.utc_now(), before, :millisecond)
-    IO.puts "Took #{time} milliseconds."
+    Logger.info "Took #{time} milliseconds."
     result
   end
 
