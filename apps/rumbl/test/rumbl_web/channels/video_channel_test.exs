@@ -32,4 +32,17 @@ defmodule RumblWeb.Channels.VideoChannelTest do
     # assert_broadcast(event, payload): event, payload는 패턴임
     assert_broadcast "new_annotation", %{}
   end
+
+  @tag :capture_log
+  test "new annotations triggers InfoSys", %{socket: socket, video: vid} do
+    insert_user(%{username: "wolfram"})
+    {:ok, _, socket} = subscribe_and_join(socket, "videos:#{vid.id}", %{})
+    # Phoenix.ChannelTest.push
+    ref = push(socket, "new_annotation", %{body: "1 + 1", at: 123})
+    # assert_reply(ref, status, payload): ref 에 해당하는 push가 status, payload 로 응답했음을 assert (status, payload 둘 다 pattern 임)
+    assert_reply ref, :ok, %{}
+    # assert_broadcast(event, payload): event, payload는 패턴임
+    assert_broadcast "new_annotation", %{body: "1 + 1", at: 123}
+    assert_broadcast "new_annotation", %{body: "2", at: 123}
+  end
 end
