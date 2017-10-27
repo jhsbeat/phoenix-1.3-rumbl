@@ -2,6 +2,9 @@ defmodule InfoSys.Wolfram do
   import SweetXml
   alias InfoSys.Result
 
+  @behaviour InfoSys.Backend
+
+  @impl true
   def start_link(query, query_ref, owner, limit) do
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])
   end

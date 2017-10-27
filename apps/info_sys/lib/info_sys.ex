@@ -1,4 +1,8 @@
 defmodule InfoSys do
+  defmodule Backend do
+    @callback start_link(String.t, reference, pid, integer) :: {:ok, pid}
+  end
+
   require Logger
   @backends [InfoSys.Wolfram, InfoSys.Crash]
   # @backends [InfoSys.Wolfram, InfoSys.Crash, InfoSys.TakeForever]
