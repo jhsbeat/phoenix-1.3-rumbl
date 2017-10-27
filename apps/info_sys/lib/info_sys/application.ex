@@ -10,7 +10,7 @@ defmodule InfoSys.Application do
     children = [
       # Starts a worker by calling: InfoSys.Worker.start_link(arg)
       # {InfoSys.Worker, arg},
-      {InfoSys.Supervisor, []},
+      InfoSys.Supervisor,
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
